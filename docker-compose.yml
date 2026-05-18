@@ -1,0 +1,49 @@
+version: '3.8'
+
+services:
+  # Base de Datos Transaccional (default)
+  db_default:
+    image: postgres:15-alpine
+    container_name: postgres_default
+    environment:
+      POSTGRES_DB: inscripciones_default
+      POSTGRES_USER: eder_admin
+      POSTGRES_PASSWORD: password_seguro_1
+    ports:
+      - "5432:5432"
+    volumes:
+      - data_default:/var/lib/postgresql/data
+      # Inyecta los alumnos, horarios e inscripciones limpias
+      - ./inicializacion_bd/02_default.sql:/docker-entrypoint-initdb.d/init.sql
+
+  # Base de Datos de Catálogos (staging_db)
+  db_staging:
+    image: postgres:15-alpine
+    container_name: postgres_staging
+    environment:
+      POSTGRES_DB: inscripciones_staging
+      POSTGRES_USER: eder_admin
+      POSTGRES_PASSWORD: password_seguro_2
+    ports:
+      - "5433:5432" 
+    volumes:
+      - data_staging:/var/lib/postgresql/data
+      # Inyecta las materias, profesores y planes de estudio
+      - ./inicializacion_bd/01_staging.sql:/docker-entrypoint-initdb.d/init.sql
+
+  # Aplicación de Django (FES Aragón App)
+  web:
+    build: .
+    container_name: django_app_inscripciones
+    ports:
+      - "8000:8000"
+    environment:
+      - DB_DEFAULT_HOST=db_default
+      - DB_STAGING_HOST=db_staging
+    depends_on:
+      - db_default
+      - db_staging
+
+volumes:
+  data_default:
+  data_staging:

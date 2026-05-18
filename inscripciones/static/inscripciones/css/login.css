@@ -1,0 +1,165 @@
+/* ==============================================================================
+   VARIABLES DE IDENTIDAD UNAM (AZUL Y ORO)
+   ============================================================================== */
+:root {
+    --unam-azul: #002b49;
+    --unam-oro: #d4a373;
+    --unam-azul-hover: #003f6c;
+    --glass-bg: rgba(255, 255, 255, 0.85);
+    --text-dark: #1e293b;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Quicksand', sans-serif;
+}
+
+body {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    /* Imagen de fondo panorámica institucional (puedes cambiar esta URL por una foto de la FES) */
+    background: linear-gradient(rgba(0, 43, 73, 0.5), rgba(0, 43, 73, 0.3)), 
+                url('https://images.unsplash.com/photo-1632616427546-a471c1cff36a?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D') no-repeat center center fixed;
+    background-size: cover;
+}
+
+/* ==============================================================================
+   TARJETA CON EFECTO VIDRIO (GLASSMORPHISM)
+   ============================================================================== */
+.login-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    padding: 40px 30px;
+    width: 100%;
+    max-width: 420px;
+    border-radius: 24px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
+    text-align: center;
+    transition: transform 0.3s ease;
+}
+
+/* Identidad Visual */
+.brand-header {
+    margin-bottom: 30px;
+}
+
+.unam-logo {
+    height: 75px;
+    margin-bottom: 15px;
+    filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));
+}
+
+.brand-header h2 {
+    color: var(--unam-azul);
+    font-size: 1.6rem;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+}
+
+.brand-header .subtitle {
+    color: #64748b;
+    font-size: 0.95rem;
+    margin-top: 2px;
+}
+
+.badge {
+    display: inline-block;
+    background: rgba(0, 43, 73, 0.1);
+    color: var(--unam-azul);
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    margin-top: 10px;
+    text-transform: uppercase;
+}
+
+/* Formulario */
+.form-group {
+    text-align: left;
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    color: var(--text-dark);
+    font-size: 0.85rem;
+    font-weight: 700;
+    margin-bottom: 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 12px 16px;
+    border: 2px solid #e2e8f0;
+    border-radius: 12px;
+    font-size: 0.95rem;
+    color: var(--text-dark);
+    background: rgba(255, 255, 255, 0.9);
+    transition: all 0.3s ease;
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: var(--unam-azul);
+    box-shadow: 0 0 0 4px rgba(0, 43, 73, 0.15);
+}
+
+/* Botón de Entrada Oficial */
+.btn-submit {
+    width: 100%;
+    padding: 14px;
+    background: var(--unam-azul);
+    color: #ffffff;
+    border: none;
+    border-radius: 12px;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0, 43, 73, 0.2);
+    transition: all 0.3s ease;
+}
+
+.btn-submit:hover {
+    background: var(--unam-azul-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(0, 43, 73, 0.3);
+}
+
+/* Alertas de Error elegantes */
+.alert {
+    padding: 12px;
+    border-radius: 12px;
+    font-size: 0.88rem;
+    font-weight: 600;
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.alert-danger {
+    background: #fef2f2;
+    color: #b91c1c;
+    border: 1px solid #fee2e2;
+}
+
+/* Footer de la tarjeta */
+.card-footer {
+    margin-top: 30px;
+    border-top: 1px solid #e2e8f0;
+    padding-top: 15px;
+}
+
+.card-footer p {
+    font-size: 0.75rem;
+    color: #94a3b8;
+    font-weight: 600;
+}

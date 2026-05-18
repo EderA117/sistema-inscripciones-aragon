@@ -1,0 +1,356 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inscripciones | FES Aragón UNAM</title>
+    <style>
+        :root {
+            --azul-unam: #0a1f3d;
+            --azul-hover: #132f5c;
+            --oro-unam: #d4a373;
+            --oro-light: #f4ebe1;
+            --exito: #10b981;
+            --danger: #ef4444;
+            --bg-card: rgba(255, 255, 255, 0.88);
+            --texto-principal: #1e293b;
+            --texto-secundario: #64748b;
+            --borde: rgba(255, 255, 255, 0.4);
+            --radio: 16px;
+            --sombra: 0 10px 30px rgba(0, 0, 0, 0.15);
+            --transicion: all 0.2s ease-in-out;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', system-ui, sans-serif; }
+        
+        body { 
+            background: linear-gradient(rgba(0, 43, 73, 0.7), rgba(0, 43, 73, 0.6)), 
+                        url('https://images.unsplash.com/photo-1632152053560-2ff69f7981f1?q=80&w=1632&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D') no-repeat center center fixed;
+            background-size: cover;
+            color: var(--texto-principal); 
+            padding-bottom: 60px; 
+            min-height: 100vh;
+        }
+
+        header {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            color: var(--azul-unam); 
+            padding: 20px 40px; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center;
+            border-bottom: 4px solid var(--oro-unam); 
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 900;
+        }
+        .header-title h1 { font-size: 1.4rem; font-weight: 700; }
+        .header-title p { color: #475569; font-size: 0.85rem; font-weight: 600; margin-top: 2px; }
+
+        .main-layout { display: grid; grid-template-columns: 2.2fr 1fr; gap: 30px; max-width: 1400px; margin: 35px auto; padding: 0 25px; }
+        h2.section-title { font-size: 1.3rem; font-weight: 700; margin-bottom: 20px; color: white; text-shadow: 0 2px 4px rgba(0,0,0,0.2); }
+        .sidebar-panel h2.section-title { color: var(--azul-unam); text-shadow: none; margin-bottom: 15px; }
+
+        .cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
+        .subject-card {
+            background: var(--bg-card); 
+            backdrop-filter: blur(8px);
+            border: 1px solid var(--borde); 
+            border-radius: var(--radio);
+            padding: 20px; 
+            box-shadow: var(--sombra); 
+            display: flex; 
+            flex-direction: column; 
+            justify-content: space-between;
+            transition: var(--transicion); 
+            position: relative; 
+            overflow: hidden;
+        }
+        .subject-card::before { content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: var(--azul-unam); }
+        .subject-card.apartada::before { background: var(--exito); }
+        .subject-title { font-size: 1.05rem; font-weight: 700; margin-top: 6px; color: var(--azul-unam); }
+        .subject-meta { display: flex; gap: 8px; margin-top: 10px; }
+        
+        .badge { font-size: 0.75rem; padding: 4px 8px; border-radius: 6px; font-weight: 700; }
+        .badge-blue { background: #e0f2fe; color: #0369a1; }
+        .badge-success { background: #d1fae5; color: #065f46; }
+
+        .btn-action {
+            width: 100%; background: var(--azul-unam); color: white; border: none; padding: 11px;
+            border-radius: 10px; font-weight: 700; cursor: pointer; transition: var(--transicion); margin-top: 15px;
+        }
+        .btn-action:hover { background: var(--azul-hover); transform: translateY(-1px); }
+        .btn-action:disabled { background: #cbd5e1; color: #94a3b8; cursor: not-allowed; transform: none; }
+
+        .sidebar-panel { 
+            background: var(--bg-card); 
+            backdrop-filter: blur(8px);
+            border: 1px solid var(--borde); 
+            border-radius: var(--radio); 
+            padding: 24px; 
+            box-shadow: var(--sombra); 
+            position: sticky; 
+            top: 110px; 
+        }
+        .cart-list { display: flex; flex-direction: column; gap: 12px; margin-top: 15px; }
+        
+        .cart-item {
+            background: rgba(255, 255, 255, 0.9); 
+            border: 1px solid #e2e8f0; 
+            border-radius: 10px; 
+            padding: 14px;
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            animation: slideIn 0.2s ease-out;
+        }
+        .cart-item-details { flex-grow: 1; padding-right: 10px; }
+        .cart-item-title { font-size: 0.9rem; font-weight: 700; color: var(--azul-unam); }
+        .cart-item-sub { font-size: 0.8rem; color: var(--texto-secundario); margin-top: 3px; font-weight: 600; }
+        
+        .btn-delete {
+            background: transparent; color: var(--danger); border: 1px solid #fee2e2; padding: 6px 12px;
+            border-radius: 8px; font-weight: 700; font-size: 0.8rem; cursor: pointer; transition: var(--transicion);
+        }
+        .btn-delete:hover { background: var(--danger); color: white; border-color: var(--danger); }
+
+        .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.4); backdrop-filter: blur(6px); z-index: 1000; }
+        .modal-box { background: var(--bg-card); width: 90%; max-width: 650px; margin: 12vh auto; border-radius: var(--radio); overflow: hidden; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.5); }
+        .modal-header-panel { background: var(--azul-unam); color: white; padding: 20px 25px; display: flex; justify-content: space-between; align-items: center; }
+        .close-icon { background: rgba(255,255,255,0.1); border: none; color: white; font-size: 1.5rem; width: 32px; height: 32px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+        .modal-body-panel { padding: 25px; max-height: 55vh; overflow-y: auto; }
+        
+        .group-row { background: rgba(255, 255, 255, 0.9); border: 1px solid #e2e8f0; border-radius: 10px; padding: 16px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; }
+        .group-details-main h4 { color: var(--azul-unam); font-size: 1rem; font-weight: 700; }
+        .group-details-main p { font-size: 0.82rem; color: var(--texto-secundario); margin-top: 2px; font-weight: 600; }
+        .btn-apartar { background: var(--exito); color: white; border: none; padding: 8px 16px; border-radius: 8px; font-weight: 700; cursor: pointer; transition: var(--transicion); }
+        .btn-apartar:hover { background: #059669; }
+
+        @keyframes slideIn { from { transform: translateY(10px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="header-title">
+            <h1>Sistema de Inscripciones</h1>
+            <p>Ingeniería en Computación — FES Aragón UNAM</p>
+        </div>
+        <div style="display: flex; align-items: center; gap: 20px;">
+            <span style="font-size: 0.95rem; font-weight: 600;">Estudiante: <strong>{{ alumno.nombre }} {{ alumno.apellidos }}</strong></span>
+            <a href="{% url 'logout_alumno' %}" style="background: #ef4444; color: white; text-decoration: none; padding: 8px 14px; border-radius: 8px; font-size: 0.85rem; font-weight: 700; transition: background 0.2s;" onmouseover="this.style.background='#dc2626'" onmouseout="this.style.background='#ef4444'">
+                Salir del Sistema
+            </a>
+        </div>
+    </header>
+
+    <div class="main-layout">
+        <section>
+            <h2 class="section-title">Asignaturas Disponibles</h2>
+            <div class="cards-grid">
+                {% for materia in materias %}
+                <div class="subject-card {% if materia.cve in materias_apartadas_ids %}apartada{% endif %}" id="card-{{ materia.cve }}">
+                    <div class="subject-header">
+                        <div style="display:flex; justify-content:space-between; align-items:center;">
+                            <span class="subject-id" style="font-size: 0.8rem; font-weight: 700; color: var(--texto-secundario);">Clave: {{ materia.cve }}</span>
+                            <span class="badge badge-success" id="status-{{ materia.cve }}" style="display: {% if materia.cve in materias_apartadas_ids %}block{% else %}none{% endif %};">Apartada</span>
+                        </div>
+                        <div class="subject-title">{{ materia.nombre }}</div>
+                        <div class="subject-meta">
+                            <span class="badge badge-blue">{{ materia.creditos }} Créditos</span>
+                        </div>
+                    </div>
+                    <button class="btn-action" id="btn-{{ materia.cve }}" onclick="abrirModalHorarios('{{ materia.cve }}', '{{ materia.nombre|escapejs }}')" {% if materia.cve in materias_apartadas_ids %}disabled{% endif %}>
+                        {% if materia.cve in materias_apartadas_ids %}Inscrita{% else %}Ver Horarios{% endif %}
+                    </button>
+                </div>
+                {% endfor %}
+            </div>
+        </section>
+
+        <aside>
+            <div class="sidebar-panel">
+                <h2 class="section-title">Materias Apartadas</h2>
+                <div id="carrito-lista" class="cart-list">
+                    {% for item in carrito %}
+                    <div class="cart-item" id="item-carrito-{{ item.id_inscripcion }}">
+                        <div class="cart-item-details">
+                            <div class="cart-item-title">{{ item.materia_nombre }}</div>
+                            <div class="cart-item-sub"><strong>Prof:</strong> {{ item.profesor_nombre }} | Gpo: {{ item.grupo }}</div>
+                            <div class="cart-item-sub" style="font-size:0.75rem; color:#94a3b8;">Clave: {{ item.cve_asignatura }}</div>
+                        </div>
+                        <button class="btn-delete" onclick="eliminarMateria('{{ item.id_inscripcion }}')">Baja</button>
+                    </div>
+                    {% empty %}
+                    <p id="carrito-vacio" style="color: var(--texto-secundario); text-align: center; padding: 20px 0; font-size: 0.9rem; font-weight: 600;">
+                        No tienes materias. Selecciona un horario.
+                    </p>
+                    {% endfor %}
+                </div>
+                <form method="POST" action="{% url 'procesar_finalizacion' alumno.id %}" id="form-finalizar">
+                    {% csrf_token %}
+                    <button type="button" class="btn-action" style="background: #10b981; margin-top: 25px; border-radius: 10px; font-size: 1rem; padding: 12px; width: 100%; border: none; color: white; font-weight: bold; cursor: pointer;" onclick="confirmarFinalizacion()">
+                        Finalizar e Inscribir Materias
+                    </button>
+                </form>
+            </div>
+        </aside>
+    </div>
+
+    <div id="modalHorarios" class="modal-overlay">
+        <div class="modal-box">
+            <div class="modal-header-panel">
+                <h3 id="modal-titulo-materia">Horarios Abiertos</h3>
+                <button class="close-icon" onclick="cerrarModal()">&times;</button>
+            </div>
+            <div id="tabla-horarios-cuerpo" class="modal-body-panel"></div>
+        </div>
+    </div>
+
+    <script>
+        const ALUMNO_ID = "{{ alumno.id }}"; 
+
+        // Petición asíncrona para jalar los horarios de la materia desde PostgreSQL staging_db
+        function abrirModalHorarios(cveMateria, nombreMateria) {
+            document.getElementById('modal-titulo-materia').innerText = nombreMateria;
+            const contenedorGrupos = document.getElementById('tabla-horarios-cuerpo');
+            contenedorGrupos.innerHTML = '<p style="text-align:center; color: var(--texto-secundario); font-weight: 600;">Consultando PostgreSQL...</p>';
+            document.getElementById('modalHorarios').style.display = 'block';
+
+            fetch(`/api/materias/${cveMateria}/grupos/`)
+                .then(response => response.json())
+                .then(data => {
+                    contenedorGrupos.innerHTML = '';
+                    if(!data.grupos || data.grupos.length === 0) {
+                        contenedorGrupos.innerHTML = '<p style="text-align:center; color: var(--texto-secundario);">No hay grupos abiertos.</p>';
+                        return;
+                    }
+                    data.grupos.forEach(g => {
+                        const filaGrupo = document.createElement('div');
+                        filaGrupo.className = 'group-row';
+                        filaGrupo.innerHTML = `
+                            <div class="group-details-main">
+                                <h4>Grupo: ${g.grupo}</h4>
+                                <p><strong>Profesor:</strong> ${g.profesor}</p>
+                                <p><strong>Horario:</strong> ${g.horarios.join(', ')}</p>
+                            </div>
+                            <div style="text-align: right; display:flex; flex-direction:column; gap:8px; align-items:flex-end;">
+                                <span class="badge badge-blue">Cupo: ${g.cupo_total}</span>
+                                <button class="btn-apartar" onclick="apartarGrupo('${g.id_horario}')">Apartar</button>
+                            </div>
+                        `;
+                        contenedorGrupos.appendChild(filaGrupo);
+                    });
+                });
+        }
+
+        function cerrarModal() { document.getElementById('modalHorarios').style.display = 'none'; }
+
+        // Envío asíncrono para bloquear el cupo en la base transaccional
+        function apartarGrupo(idHorario) {
+            fetch('/api/inscripcion/apartar/', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ alumno_id: ALUMNO_ID, horario_id: idHorario })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    cerrarModal();
+                    
+                    const card = document.getElementById(`card-${data.cve_asignatura}`);
+                    const btn = document.getElementById(`btn-${data.cve_asignatura}`);
+                    const status = document.getElementById(`status-${data.cve_asignatura}`);
+                    
+                    if(card) card.classList.add('apartada');
+                    if(status) status.style.display = 'block';
+                    if(btn) {
+                        btn.disabled = true;
+                        btn.innerText = 'Inscrita en Carrito';
+                    }
+
+                    // Inserta de forma reactiva el nuevo renglón en la barra lateral sin recargar
+                    const listaCarrito = document.getElementById('carrito-lista');
+                    const mensajeVacio = document.getElementById('carrito-vacio');
+                    if (mensajeVacio) mensajeVacio.remove();
+                    
+                    const nuevoItem = document.createElement('div');
+                    nuevoItem.className = 'cart-item';
+                    nuevoItem.id = `item-carrito-${data.id_inscripcion}`;
+                    nuevoItem.innerHTML = `
+                        <div class="cart-item-details">
+                            <div class="cart-item-title">${data.materia_nombre}</div>
+                            <div class="cart-item-sub"><strong>Prof:</strong> ${data.profesor_nombre} | Gpo: ${data.grupo}</div>
+                            <div class="cart-item-sub" style="font-size:0.75rem; color:#94a3b8;">Clave: ${data.cve_asignatura}</div>
+                        </div>
+                        <button class="btn-delete" onclick="eliminarMateria('${data.id_inscripcion}')">Baja</button>
+                    `;
+                    listaCarrito.insertBefore(nuevoItem, listaCarrito.firstChild);
+                } else {
+                    alert("❌ " + data.message);
+                }
+            });
+        }
+
+        // Remueve la inscripción temporal y restaura el contador de cupos
+        function eliminarMateria(inscripcionId) {
+            if(!confirm("¿Seguro que deseas dar de baja esta asignatura de tu carrito?")) return;
+
+            fetch(`/api/inscripcion/eliminar/${inscripcionId}/`, {
+                method: 'POST'
+            })
+            .then(response => response.json())
+            .then(data => {
+                if(data.success) {
+                    const item = document.getElementById(`item-carrito-${inscripcionId}`);
+                    if(item) item.remove();
+
+                    const card = document.getElementById(`card-${data.cve_asignatura}`);
+                    const btn = document.getElementById(`btn-${data.cve_asignatura}`);
+                    const status = document.getElementById(`status-${data.cve_asignatura}`);
+                    
+                    if(card) card.classList.remove('apartada');
+                    if(status) status.style.display = 'none';
+                    if(btn) {
+                        btn.disabled = false;
+                        btn.innerText = 'Ver Horarios Abiertos';
+                    }
+
+                    const listaCarrito = document.getElementById('carrito-lista');
+                    if(listaCarrito.children.length === 0) {
+                        listaCarrito.innerHTML = `
+                            <p id="carrito-vacio" style="color: var(--texto-secundario); text-align: center; padding: 20px 0; font-size: 0.9rem; font-weight: 600;">
+                                Tu apartado esta vacio. Selecciona almenos un horario.
+                            </p>
+                        `;
+                    }
+                } else {
+                    alert("❌ " + data.message);
+                }
+            });
+        }
+
+        window.onclick = function(event) {
+            const modal = document.getElementById('modalHorarios');
+            if (event.target == modal) cerrarModal();
+        }
+
+        // Consolidación final del horario e impresión del comprobante PDF horizontal
+        function confirmarFinalizacion() {
+            const lista = document.getElementById('carrito-lista');
+            if (document.getElementById('carrito-vacio') || lista.children.length === 0) {
+                alert("❌ No puedes finalizar la inscripción si tu carrito está vacío.");
+                return;
+            }
+            
+            if (confirm("¿Estás seguro de que deseas consolidar tu horario? Ya no podrás realizar modificaciones posteriores.")) {
+                document.getElementById('form-finalizar').submit();
+            }
+        }
+    </script>
+</body>
+</html>

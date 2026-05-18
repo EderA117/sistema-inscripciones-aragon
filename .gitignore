@@ -1,0 +1,19 @@
+# Cache de Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Bases de datos locales (¡Muy importante!)
+*.sqlite3
+postgres_data/
+db_default_data/
+db_staging_db_data/
+
+# Entornos virtuales si es que crearon alguno
+venv/
+.venv/
+
+# Archivos del sistema y de configuración local
+.DS_Store
+.env

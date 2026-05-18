@@ -1,0 +1,52 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Control de Accesos — FES Aragón UNAM</title>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'inscripciones/css/login.css' %}">
+</head>
+<body>
+
+    <div class="login-card">
+        
+        <div class="brand-header">
+            <img src="{% static 'inscripciones/img/logo_unam.png' %}" alt="Logo UNAM" class="unam-logo">
+            <h2>FES Aragón UNAM</h2>
+            <p class="subtitle">Ingeniería en Computación</p>
+            <span class="badge">Control de Acceso</span>
+        </div>
+
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert {% if message.tags == 'error' %}alert-danger{% else %}alert-info{% endif %}">
+                    ⚠️ {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+
+        <form method="POST" action="{% url 'login_alumno' %}">
+            {% csrf_token %}
+            
+            <div class="form-group">
+                <label for="correo">Correo Institucional</label>
+                <input type="email" id="correo" name="correo" placeholder="usuario@aragon.unam.mx" required autocomplete="off">
+            </div>
+
+            <div class="form-group">
+                <label for="contrasena">Contraseña Escolar</label>
+                <input type="password" id="contrasena" name="contrasena" placeholder="••••••••" required>
+            </div>
+
+            <button type="submit" class="btn-submit">Ingresar al Sistema</button>
+        </form>
+
+        <div class="card-footer">
+            <p>Base de Datos II — Sistema de Inscripción</p>
+        </div>
+    </div>
+
+</body>
+</html>
