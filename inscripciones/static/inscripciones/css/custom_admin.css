@@ -1,123 +1,56 @@
 /* ==========================================================================
-   CUSTOM ADMIN STYLE — SINTONÍA CON PANEL.HTML
+   Estilos Personalizados de Identidad Institucional para Jazzmin Admin
    ========================================================================== */
 
 :root {
-    --azul-unam: #0a1f3d;
-    --azul-oscuro: #07162c;
-    --oro-unam: #d4a373;
-    --bg-card: #1e293b;
-    --texto-blanco: #f8fafc;
+    --azul-unam: #002b49;       /* Azul profundo institucional */
+    --dorado-unam: #d4af37;     /* Dorado elegante metálico */
+    --oscuro-sidebar: #0a192f;  /* Azul marino ultra oscuro para el fondo minimalista */
+    --blanco-puro: #ffffff;
 }
 
-/* 1. Fondo de la página y Login */
-body, .login-page {
-    background-color: #0f172a !important;
-    color: var(--texto-blanco) !important;
-    font-family: 'Segoe UI', system-ui, sans-serif !important;
-}
-
-/* 2. Modificar la barra superior (Navbar) */
-.main-header {
+#header, .main-header, .navbar, .brand-link {
     background-color: var(--azul-unam) !important;
-    border-bottom: 2px solid var(--oro-unam) !important;
 }
 
-.main-header .nav-link {
-    color: var(--texto-blanco) !important;
+.main-sidebar, .sidebar {
+    background-color: var(--oscuro-sidebar) !important;
 }
 
-/* 3. Modificar la barra lateral (Sidebar) */
-.main-sidebar {
-    background-color: var(--azul-oscuro) !important;
-    border-right: 1px solid rgba(255, 255, 255, 0.05) !important;
-}
-
-.sidebar .nav-link.active {
-    background-color: var(--oro-unam) !important;
-    color: var(--azul-oscuro) !important;
-    font-weight: bold !important;
-    border-radius: 8px !important;
-}
-
-/* 4. Tarjetas y contenedores del Dashboard */
-.card {
-    background-color: var(--bg-card) !important;
-    border: 1px solid rgba(255, 255, 255, 0.05) !important;
-    border-radius: 12px !important;
-    color: var(--texto-blanco) !important;
-}
-
-.card-header {
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
-    background-color: rgba(0, 0, 0, 0.1) !important;
-}
-
-/* 5. Estilo para las tablas de datos (Alumnos, Inscripciones...) */
-.table {
-    color: var(--texto-blanco) !important;
-}
-
-.table thead th {
+.nav-sidebar .nav-item>.nav-link.active {
     background-color: var(--azul-unam) !important;
-    color: var(--texto-blanco) !important;
-    border-bottom: 2px solid var(--oro-unam) !important;
-    font-weight: 600 !important;
+    border-left: 4px solid var(--dorado-unam) !important;
+    color: var(--blanco-puro) !important;
 }
 
-.table tbody tr {
-    background-color: transparent !important;
-    transition: background-color 0.2s !important;
+.nav-sidebar .nav-link:hover {
+    color: var(--dorado-unam) !important;
 }
 
-.table tbody tr:hover {
-    background-color: rgba(255, 255, 255, 0.03) !important;
+.brand-link .brand-text, .navbar-nav .nav-link {
+    color: var(--blanco-puro) !important;
 }
 
-.table td, .table th {
-    border-top: 1px solid rgba(255, 255, 255, 0.05) !important;
-}
-
-/* 6. Botones principales estilo FES */
-.btn-primary, .btn-success, .btn-info {
+.login-box .card-header, .btn-primary {
     background-color: var(--azul-unam) !important;
     border-color: var(--azul-unam) !important;
-    color: white !important;
-    border-radius: 6px !important;
-    transition: all 0.2s !important;
+    color: var(--blanco-puro) !important;
 }
 
-.btn-primary:hover, .btn-success:hover {
-    background-color: #132f5c !important;
-    border-color: var(--oro-unam) !important;
+.btn-primary:hover {
+    background-color: var(--dorado-unam) !important;
+    border-color: var(--dorado-unam) !important;
+    color: var(--azul-unam) !important;
+    font-weight: bold;
 }
 
-.btn-warning {
-    background-color: var(--oro-unam) !important;
-    border-color: var(--oro-unam) !important;
-    color: var(--azul-oscuro) !important;
-    font-weight: 600 !important;
+.content-wrapper .content-header {
+    border-bottom: 1px solid rgba(212, 175, 55, 0.2) !important;
 }
 
-/* 7. Entradas de texto y filtros */
-.form-control, .select2-container--default .select2-selection--single {
-    background-color: #0f172a !important;
-    border: 1px solid rgba(255, 255, 255, 0.1) !important;
-    color: var(--texto-blanco) !important;
-    border-radius: 6px !important;
+a {
+    color: var(--azul-unam);
 }
-
-.form-control:focus {
-    border-color: var(--oro-unam) !important;
-    box-shadow: none !important;
-}
-
-.content-wrapper {
-    background-color: #0f172a !important;
-}
-
-.page-item.active .page-link {
-    background-color: var(--oro-unam) !important;
-    border-color: var(--oro-unam) !important;
-    color: var(--azul-oscuro) !important;
+a:hover {
+    color: var(--dorado-unam);
 }

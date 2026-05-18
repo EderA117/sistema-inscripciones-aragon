@@ -143,20 +143,15 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # CONFIGURACIÓN DEFINITIVA DE JAZZMIN (DISTRIBUCIÓN Y IDENTIDAD ELEGANTE)
 # ==============================================================================
 JAZZMIN_SETTINGS = {
-    # Títulos de Identidad Institucional FES Aragón
     "site_title": "Admin Inscripciones FES",
     "site_header": "FES Aragón — Control Escolar",
     "site_brand": "Inscripciones Computación",
-    "welcome_sign": "Bienvenido al Sistema de Gestión de Inscripciones (DB2)",
+    "welcome_sign": "Sistema de Gestión de Inscripciones (DB2)",
     "copyright": "Facultad de Estudios Superiores Aragón UNAM",
     
-    # Buscador global rápido en la barra superior
     "search_model": ["inscripciones.Alumno"],
+    "custom_css": "inscripciones/css/custom_admin.css",  # ¡Aquí inyectaremos la magia!
 
-    # Inyección de estilos CSS sincronizados con panel.html
-    "custom_css": "inscripciones/css/custom_admin.css",
-
-    # 1. MAPEADO DE ICONOS VECTORIALES (FontAwesome)
     "icons": {
         "auth.user": "fas fa-user-shield",
         "auth.group": "fas fa-users-cog",
@@ -168,70 +163,37 @@ JAZZMIN_SETTINGS = {
         "inscripciones.planestudio": "fas fa-scroll",
     },
     
-    # 2. ORDENAMIENTO ESTRICTO DE SECCIONES (Sustituye por la propiedad correcta que lee Jazzmin)
-    "reorder_with_respect_to": [
-        # Bloque Principal: Operación Masiva
+    # Propiedad correcta de Jazzmin para ordenar el menú lateral
+    "order_with_respect_to": [
         "inscripciones.alumno",
         "inscripciones.inscripcion",
-        # Bloque Secundario: Control Escolar de 5to Semestre
         "inscripciones.horarios",
-        # Bloque Bajo: Catálogos Estáticos
         "inscripciones.asignatura",
         "inscripciones.profesor",
         "inscripciones.planestudio",
-        # Seguridad de Django hasta el fondo
         "auth.user",
         "auth.group"
     ],
 
-    # 3. MENÚ DE CONTROL SUPERIOR
     "topmenu_links": [
         {"name": "Dashboard Central", "url": "admin:index", "permissions": ["auth.change_user"]},
-        {"name": "Ir a Ventana de Alumnos", "url": "/", "new_window": True},
+        {"name": "Ver Ventana de Alumnos", "url": "/", "new_window": True},
     ],
     
-    # Ajustes estructurales de barras de navegación
-    "usermenu_links": [],
     "show_sidebar": True,
     "navigation_expanded": True,
-    
-    # 4. AGRUPACIÓN COMPACTA (Evita que las tablas desaparezcan del centro)
-    # Dejamos que Django ordene el dashboard con "reorder_with_respect_to", pero si quieres 
-    # un acceso directo unificado a configuraciones base, lo mapeamos aquí:
-    "custom_links": {
-        "inscripciones": [{
-            "name": "Seguridad e Identidades",
-            "url": "/admin/auth/user/",
-            "icon": "fas fa-shield-alt",
-        }]
-    },
 }
 
-JAZZMIN_UI_TUNER = {
-    "navbar_small_text": False,
-    "footer_small_text": False,
-    "body_small_text": False,
-    "brand_small_text": False,
-    "brand_colour": "navbar-dark bg-dark", 
-    "actions_sidebar": False,
-    "main_sidebar": "sidebar-dark-navy", # Azul marino corporativo profundo
-    "sidebar_nav_child_indent": True,
-    "navbar": "navbar-dark bg-dark",
-    "no_navbar_border": True,
-    "navbar_fixed": True,
-    "layout_boxed": False,
-    "footer_fixed": False,
-    "sidebar_fixed": True,
-    "sidebar": "sidebar-dark-navy",
-    "sidebar_nav_flat_style": False,
-    "theme": "flatly", 
+# Configuración estructural de la interfaz de Jazzmin
+JAZZMIN_UI_TWEAKS = {
+    "theme": "flatly",  # Base limpia y minimalista
     "dark_mode_theme": None,
-    "button_classes": {
-        "primary": "btn-primary",
-        "secondary": "btn-secondary",
-        "info": "btn-info",
-        "warning": "btn-warning",
-        "danger": "btn-danger",
-        "success": "btn-success"
-    }
+    "navbar_fixed": True,
+    "sidebar_fixed": True,
+    "sidebar_nav_child_indent": True,
+    "no_navbar_border": True,
+    # Clases base que luego reescribiremos con el CSS personalizado
+    "navbar": "navbar-dark bg-dark",
+    "sidebar": "sidebar-dark-navy",
+    "brand_colour": "navbar-dark bg-dark",
 }
